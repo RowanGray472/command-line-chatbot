@@ -3,7 +3,7 @@
 This repo will contain a chatbot that can interact with your command line and help you with system administration.
 
 1. In which we pipe an LLM into /bin/bash and see what happens
-1. [Rowan](https://github.com/RowanGray472) and [Ainslee](https://github.com/Rowa)
+1. [Rowan](https://github.com/RowanGray472) and [Ainslee](https://github.com/ains-arch)
 1. Outline
     1. LLaMa model (run locally! don't give an LLM free reign over your computer AND connect it to
        someone else's cloud; you gotta pick one bad decision at a time)
