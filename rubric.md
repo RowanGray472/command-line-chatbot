@@ -15,7 +15,7 @@
 |  5% | It actually works (on your machine, using the instructions from the GitHub repo) |
 |  5% | It actually works (well)                                                         |
      
-|    | Vibes(15%)                                                  |
+|    | Vibes (15%)                                                  |
 |----|-------------------------------------------------------------|
 | 5% | Engineering: Code/design quality                            |
 | 5% | Communications: README professionalism & social media posts |
