@@ -15,7 +15,7 @@
 |  5% | It actually works (on your machine, using the instructions from the GitHub repo) |
 |  5% | It actually works (well)                                                         |
      
-|    | Vibes (15%)                                                  |
+|    | Vibes (15%)                                                 |
 |----|-------------------------------------------------------------|
 | 5% | Engineering: Code/design quality                            |
 | 5% | Communications: README professionalism & social media posts |
@@ -25,7 +25,7 @@
 |-----|--------------------------------------------------------------------|
 | 10% | Experimental component (evaluation based on data - ideas welcomed) |
     
-|     | Extra Credit Opportunities (50%)                             |
+|     | Extra Credit Opportunities (60%)                             |
 |-----|--------------------------------------------------------------|
 |  5% | It's on time and under budget                                |
 |  5% | It all runs locally                                          |
@@ -33,3 +33,4 @@
 | 10% | It takes voice input via Whisper that is good (uses grammar) |
 | 15% | We fine tune our model                                       |
 | 10% | Absolutely anyone notices our social media posts             |
+| 10% | We implement 'freestyle mode' and it's funny                 |
