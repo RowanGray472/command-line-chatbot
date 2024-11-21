@@ -6,10 +6,17 @@ This file will include all command line outputs/inputs
 
 import os
 import argparse
-from rag_system import rag, extract_keywords, summarize_text, run_llm
+from rag_system import rag, extract_keywords, run_llm
+import time
 
 def cli_output(text):
-    output = rag(text)
+    output = rag(text) 
+
+    # Simulate typing the command
+    for char in output:
+        print(char, end='', flush=True)
+        time.sleep(0.05)  
+        print()
     os.system(output)
 
 if __name__ == "__main__":
