@@ -8,6 +8,7 @@ import os
 import argparse
 from rag_system import rag, extract_keywords, run_llm
 import time
+import ollama
 
 def cli_output(text):
     output = rag(text) 
