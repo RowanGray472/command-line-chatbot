@@ -36,7 +36,7 @@ import ollama
 #################
 
 def run_llm(system, user):
-    response = ollama.chat(model='llama3.2', 
+    response = ollama.chat(model='llama2', 
                            messages=[
                 {
                     'role': 'system',
