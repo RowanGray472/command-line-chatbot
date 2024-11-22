@@ -11,7 +11,7 @@ ollama pull llama3.2
 
 # database setup
 
-OUT_DIR=~/manpages
+OUT_DIR=/manpages
 
 rm -rf $OUT_DIR
 mkdir $OUT_DIR
