@@ -284,5 +284,5 @@ def rag(text, db):
 
 
     """ # TODO: Fill in examples
-    user = f"Text: {text}\n\nArticles:\n\n" + '\n\n'.join([f"{article['title']}\n{article['en_summary']}" for article in articles]) # TODO: make this work with our database
-    return run_llm(system, user)
+    user = f"Text: {text}\n\nArticles:\n\n" + '\n\n'.join([f"{article['command_name']}\n{article['manpage_text']}" for article in articles]) # TODO: make this work with our database
+    return run_llm(syste
