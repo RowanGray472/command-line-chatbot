@@ -7,7 +7,7 @@
 # ollama setup
 
 curl -fsSL https://ollama.com/install.sh | sh
-ollama pull llama2
+ollama pull llama3.2
 
 # database setup
 

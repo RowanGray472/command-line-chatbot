@@ -24,8 +24,7 @@ Stuff to have for all llm prompts
 
 """
 
-from dotenv import load_dotenv
-load_dotenv()
+
 import os
 import ollama
 
@@ -37,7 +36,7 @@ import ollama
 #################
 
 def run_llm(system, user):
-    response = ollama.chat(model='llama2', 
+    response = ollama.chat(model='llama3.2', 
                            messages=[
                 {
                     'role': 'system',
@@ -283,6 +282,6 @@ def rag(text, db):
 
 
 
-    """ # TODO: Fill in examples
-    user = f"Text: {text}\n\nArticles:\n\n" + '\n\n'.join([f"{article['command_name']}\n{article['manpage_text']}" for article in articles]) # TODO: make this work with our database
-    return run_llm(syste
+    """ 
+    user = f"Text: {text}\n\nArticles:\n\n" + '\n\n'.join([f"{article['command_name']}\n{article['manpage_text']}" for article in articles]) 
+    return run_llm(system, user)
