@@ -1,43 +1,37 @@
 import os
 import sqlite3
-import re
 
 MANPAGES_DIR = "manpages"
 DATABASE_FILE = "manpages.db"
 
 conn = sqlite3.connect(DATABASE_FILE)
 cursor = conn.cursor()
-
 cursor.execute("""
                CREATE TABLE IF NOT EXISTS manpages (
                command_name TEXT PRIMARY KEY,
                manpage_text TEXT
                )
 """)
+conn.commit()
 
-def extract_command_name(file_path):
-    with open(file_path, "r", encoding="utf-8") as f:
-        for line in f:
-            match = re.search(r"4m([A-Za-z0-_-]+)24m", line)
-            if match:
-                return match.group(1).lower()
-        f.seek(0)
-        first_30 = f.read(30).strip()
-        return f"DEBUG: {first_30}" if first_30 else "DEBUG: EMPTY_FILE"
-
-for root, dirs, files in os.walk(MANPAGES_DIR):
+for root, _, files in os.walk(MANPAGES_DIR):
     for file in files:
         if file.endswith(".txt"):
-            file_path = os.path.join(root, file)
-            command_name = extract_command_name(file_path)
-            with open(file_path, "r", encoding="utf-8") as f:
-                manpage_text = f.read()
+            txt_path = os.path.join(root, file)
+            meta_path = os.path.splitext(txt_path)[0] + ".meta"
+            with open(txt_path, "r") as txt_file:
+                manpage_text = txt_file.read()
+
+            if os.path.exists(meta_path):
+                with open(meta_path, "r") as meta_file:
+                    command_name = meta_file.read().strip()
+            else:
+                command_name = os.path.splitext(file)[0] # Fallback to file name
 
             cursor.execute("""
-            INSERT OR REPLACE INTO manpages (command_name, manpage_text)
+            INSERT INTO manpages (command_name, manpage_text)
             VALUES (?, ?)
             """, (command_name, manpage_text))
-
 conn.commit()
 conn.close()
 
