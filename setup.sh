@@ -3,10 +3,16 @@
 # Code that creates the database automatically based on your man pages
 # Code that installs a llama model and gets it ready to go on your computer
 
+# filesystem setup - run if you're in a VM to update everything and expand root size to max
+# sudo apt update && sudo apt upgrade -y
+# sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+# sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
 
 # ollama setup
 
 curl -fsSL https://ollama.com/install.sh | sh
+ollama
+ollama serve
 ollama pull llama2
 
 # database setup
