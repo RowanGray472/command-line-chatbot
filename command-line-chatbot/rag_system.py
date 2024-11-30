@@ -39,7 +39,7 @@ import re
 #################
 
 def run_llm(system, user):
-    print("running llm (inner)")
+    print("running llm (inner)", flush=True)
     response = ollama.chat(model='llama2:7b', 
                            messages=[
                 {
@@ -50,7 +50,7 @@ def run_llm(system, user):
                     "role": "user",
                     "content": user,
                 }])
-    print("returning llm")
+    print("returning llm", flush=True)
     return(response['message']['content'])
 
 def extract_keywords(text, seed=None):
@@ -241,9 +241,9 @@ def extract_keywords(text, seed=None):
 
 
     '''
-    print("extracting keywords")
+    print("extracting keywords", flush=True)
     text = run_llm(system, text)
-    print("returning keywords")
+    print("returning keywords", flush=True)
     return text
 
 ####################
@@ -261,9 +261,9 @@ def _logsql(sql):
 
 def rag(text, db):
     keywords = extract_keywords(text)
-    print("querying database")
+    print("querying database", flush=True)
     manpages = db.find_manpages(query = keywords)
-    print("database queried")
+    print("database queried", flush=True)
     
     system = """
     
@@ -302,9 +302,9 @@ def rag(text, db):
 
 
     """ 
-    print("building llm query")
+    print("building llm query", flush=True)
     user = f"Text: {text}\n\nManpages:\n\n" + '\n\n'.join([f"{manpage['command']}\n{manpage['text']}" for manpage in manpages]) 
-    print("running llm (final)")
+    print("running llm (final)", flush=True)
     return run_llm(system, user)
 
 class ManpagesDB:
@@ -333,7 +333,7 @@ class ManpagesDB:
         >>> db._create_schema()
         >>> db._create_schema()
         '''
-        print("creating schema")
+        print("creating schema", flush=True)
         try:
             sql = '''
             CREATE VIRTUAL TABLE manpages
@@ -349,13 +349,13 @@ class ManpagesDB:
         # then do nothing
         except sqlite3.OperationalError:
             self.logger.debug('CREATE TABLE failed')
-        print("schema created")
+        print("schema created", flush=True)
 
     def _add_manpages(self, directory='manpages'):
         '''
         Adds the manpages in the system memory.
         '''
-        print("adding manpages to database")
+        print("adding manpages to database", flush=True)
         for root, _, files in os.walk(directory):
             for file in files:
                 if file.endswith(".txt"):
@@ -376,7 +376,7 @@ class ManpagesDB:
                     '''
                     _logsql(sql)
                     cursor = self.db.cursor()
-        print("database complete")
+        print("database complete", flush=True)
 
     def __len__(self):
         sql = '''
@@ -394,7 +394,7 @@ class ManpagesDB:
         '''
         Return a list of manpages in the database that match the specified query.
         '''
-        print("finding manpages")
+        print("finding manpages", flush=True)
         sql = f'''
         SELECT command, text
         FROM manpages
@@ -411,7 +411,7 @@ class ManpagesDB:
         columns = [column[0] for column in cursor.description]
         # Convert rows to a list of dictionaries
         row_dict = [dict(zip(columns, row)) for row in rows]
-        print("returning manpages")
+        print("returning manpages", flush=True)
         return row_dict
 
 if __name__ == '__main__':

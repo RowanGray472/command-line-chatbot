@@ -6,12 +6,13 @@ This file will include all command line outputs/inputs
 
 import os
 import argparse
-from rag_system import rag, extract_keywords, run_llm
+from rag_system import rag, extract_keywords, run_llm, ManpagesDB
 import time
 import ollama
+import logging
 
-def cli_output(text):
-    output = rag(text) 
+def cli_output(text, db):
+    output = rag(text, db) 
 
     # Simulate typing the command
     for char in output:
@@ -25,6 +26,8 @@ if __name__ == "__main__":
         description="A command-line interface for interacting with the RAG system."
     )
 
+    parser.add_argument('--loglevel', default='warning')
+
     parser.add_argument(
         "--text", 
         type=str, 
@@ -36,9 +39,18 @@ if __name__ == "__main__":
             "--db",
             type=str,
             required=False,
+            default='manpages.db',
             help="Path to the database file."
     )
 
     args = parser.parse_args()
 
-    cli_output(args.text)
+    logging.basicConfig(
+        format='%(asctime)s %(levelname)-8s %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S',
+        level=args.loglevel.upper(),
+        )
+
+    db = ManpagesDB(args.db)
+
+    cli_output(args.text, db)
