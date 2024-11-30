@@ -48,8 +48,6 @@ def run_llm(system, user):
                 }])
     return(response['message']['content'])
 
-
-
 def extract_keywords(text, seed=None):
     system = '''
     
@@ -242,9 +240,22 @@ def extract_keywords(text, seed=None):
     text = run_llm(system, text)
     return text
 
+####################
+# HELPER FUNCTIONS #
+####################
+
+def _logsql(sql):
+    rex = re.compile(r'\W+')
+    sql_dewhite = rex.sub(' ', sql)
+    logging.debug("SQL: %s", sql_dewhite)
+
+#######
+# RAG #
+#######
+
 def rag(text, db):
     keywords = extract_keywords(text)
-    articles = db.find_articles(query = keywords)
+    manpages = db.find_manpages(query = keywords)
     
     system = """
     
@@ -283,5 +294,129 @@ def rag(text, db):
 
 
     """ 
-    user = f"Text: {text}\n\nArticles:\n\n" + '\n\n'.join([f"{article['command_name']}\n{article['manpage_text']}" for article in articles]) 
+    user = f"Text: {text}\n\nManpages:\n\n" +
+    '\n\n'.join([f"{manpage['command']}\n{manpage['text']}" for manpage in manpages]) 
     return run_llm(system, user)
+
+class ManpagesDB:
+    '''
+    This class represents a database of manpages.
+
+    >>> db = ManpagesDB()
+    >>> len(db)
+    0
+    '''
+    def __init__(self, filename=':memory:'):
+        self.db = sqlite3.connect(filename)
+        self.db.row_factory=sqlite3.Row
+        self.logger = logging
+        self._create_schema()
+
+    def _create_schema(self):
+        '''
+        Create the DB schema if it doesn't already exist.
+
+        The test below demonstrates that creating a schema on a database that already has the schema
+        will not generate errors.
+
+        >>> db = ManpagesDB()
+        >>> db._create_schema()
+        >>> db._create_schema()
+        '''
+        try:
+            sql = '''
+            CREATE VIRTUAL TABLE manpages
+            USING FTS5 (
+               command,
+               text
+               );
+            '''
+            self.db.execute(sql)
+            self.db.commit()
+
+        # if the database already exists,
+        # then do nothing
+        except sqlite3.OperationalError:
+            self.logger.debug('CREATE TABLE failed')
+
+    def find_manpages(self, query, limit=8):
+        '''
+        Return a list of manpages in the database that match the specified query.
+        '''
+
+        sql = f'''
+        SELECT command, text
+        FROM manpages
+        WHERE manpages MATCH '{query}'
+        ORDER BY rank
+        LIMIT {limit};
+        '''
+        _logsql(sql)
+        cursor = self.db.cursor()
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+
+        # Get column names from cursor description
+        columns = [column[0] for column in cursor.description]
+        # Convert rows to a list of dictionaries
+        row_dict = [dict(zip(columns, row)) for row in rows]
+        return row_dict
+
+    def add_manpages(self, directory='manpages'):
+        '''
+        Adds the manpages in the system memory.
+        '''
+        for root, _, files in os.walk(MANPAGES_DIR):
+            for file in files:
+                if file.endswith(".txt"):
+                    txt_path = os.path.join(root, file)
+                    meta_path = os.path.splitext(txt_path)[0] + ".meta"
+                    with open(txt_path, "r") as txt_file:
+                        manpage_text = txt_file.read()
+        
+                    if os.path.exists(meta_path):
+                        with open(meta_path, "r") as meta_file:
+                            command_name = meta_file.read().strip()
+                    else:
+                        command_name = os.path.splitext(file)[0] # Fallback to file name
+        
+                    sql = f'''
+                    INSERT INTO manpages (command, text)
+                    VALUES ({command_name}, {manpage_text})
+                    '''
+                    _logsql(sql)
+                    cursor = self.db.cursor()
+                    cursor.execute(sql)
+
+    def __len__(self):
+        sql = '''
+        SELECT count(*)
+        FROM manpages
+        WHERE text IS NOT NULL;
+        '''
+        _logsql(sql)
+        cursor = self.db.cursor()
+        cursor.execute(sql)
+        row = cursor.fetchone()
+        return row[0]
+
+if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--loglevel', default='warning')
+    parser.add_argument('--db', default='manpages.db')
+    m_args = parser.parse_args()
+
+    logging.basicConfig(
+        format='%(asctime)s %(levelname)-8s %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S',
+        level=m_args.loglevel.upper(),
+        )
+
+    m_db = ManpagesDB(m_args.db)
+
+    while True:
+        user_text = input('rag> ')
+        if len(user_text.strip()) > 0:
+            output = rag(user_text, m_db)
+            print(output)

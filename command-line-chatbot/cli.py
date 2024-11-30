@@ -32,7 +32,13 @@ if __name__ == "__main__":
         help="Input text to process with the RAG system."
     )
 
+    parser.add_argument(
+            "--db",
+            type=str,
+            required=False,
+            help="Path to the database file."
+    )
+
     args = parser.parse_args()
 
     cli_output(args.text)
-
