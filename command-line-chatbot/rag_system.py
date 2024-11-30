@@ -29,6 +29,7 @@ import os
 import ollama
 import logging
 import sqlite3
+import re
 
 # TODO: Add something here that imports the database
 # TODO: Make all the prompts good
@@ -38,6 +39,7 @@ import sqlite3
 #################
 
 def run_llm(system, user):
+    print("running llm (inner)")
     response = ollama.chat(model='llama2:7b', 
                            messages=[
                 {
@@ -48,6 +50,7 @@ def run_llm(system, user):
                     "role": "user",
                     "content": user,
                 }])
+    print("returning llm")
     return(response['message']['content'])
 
 def extract_keywords(text, seed=None):
@@ -238,8 +241,9 @@ def extract_keywords(text, seed=None):
 
 
     '''
-
+    print("extracting keywords")
     text = run_llm(system, text)
+    print("returning keywords")
     return text
 
 ####################
@@ -257,7 +261,9 @@ def _logsql(sql):
 
 def rag(text, db):
     keywords = extract_keywords(text)
+    print("querying database")
     manpages = db.find_manpages(query = keywords)
+    print("database queried")
     
     system = """
     
@@ -296,7 +302,9 @@ def rag(text, db):
 
 
     """ 
+    print("building llm query")
     user = f"Text: {text}\n\nManpages:\n\n" + '\n\n'.join([f"{manpage['command']}\n{manpage['text']}" for manpage in manpages]) 
+    print("running llm (final)")
     return run_llm(system, user)
 
 class ManpagesDB:
@@ -312,6 +320,7 @@ class ManpagesDB:
         self.db.row_factory=sqlite3.Row
         self.logger = logging
         self._create_schema()
+        self._add_manpages()
 
     def _create_schema(self):
         '''
@@ -324,6 +333,7 @@ class ManpagesDB:
         >>> db._create_schema()
         >>> db._create_schema()
         '''
+        print("creating schema")
         try:
             sql = '''
             CREATE VIRTUAL TABLE manpages
@@ -339,35 +349,14 @@ class ManpagesDB:
         # then do nothing
         except sqlite3.OperationalError:
             self.logger.debug('CREATE TABLE failed')
+        print("schema created")
 
-    def find_manpages(self, query, limit=8):
-        '''
-        Return a list of manpages in the database that match the specified query.
-        '''
-
-        sql = f'''
-        SELECT command, text
-        FROM manpages
-        WHERE manpages MATCH '{query}'
-        ORDER BY rank
-        LIMIT {limit};
-        '''
-        _logsql(sql)
-        cursor = self.db.cursor()
-        cursor.execute(sql)
-        rows = cursor.fetchall()
-
-        # Get column names from cursor description
-        columns = [column[0] for column in cursor.description]
-        # Convert rows to a list of dictionaries
-        row_dict = [dict(zip(columns, row)) for row in rows]
-        return row_dict
-
-    def add_manpages(self, directory='manpages'):
+    def _add_manpages(self, directory='manpages'):
         '''
         Adds the manpages in the system memory.
         '''
-        for root, _, files in os.walk(MANPAGES_DIR):
+        print("adding manpages to database")
+        for root, _, files in os.walk(directory):
             for file in files:
                 if file.endswith(".txt"):
                     txt_path = os.path.join(root, file)
@@ -387,7 +376,7 @@ class ManpagesDB:
                     '''
                     _logsql(sql)
                     cursor = self.db.cursor()
-                    cursor.execute(sql)
+        print("database complete")
 
     def __len__(self):
         sql = '''
@@ -400,6 +389,30 @@ class ManpagesDB:
         cursor.execute(sql)
         row = cursor.fetchone()
         return row[0]
+    
+    def find_manpages(self, query, limit=8):
+        '''
+        Return a list of manpages in the database that match the specified query.
+        '''
+        print("finding manpages")
+        sql = f'''
+        SELECT command, text
+        FROM manpages
+        WHERE manpages MATCH '{query}'
+        ORDER BY rank
+        LIMIT {limit};
+        '''
+        _logsql(sql)
+        cursor = self.db.cursor()
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+
+        # Get column names from cursor description
+        columns = [column[0] for column in cursor.description]
+        # Convert rows to a list of dictionaries
+        row_dict = [dict(zip(columns, row)) for row in rows]
+        print("returning manpages")
+        return row_dict
 
 if __name__ == '__main__':
     import argparse

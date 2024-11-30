@@ -3,10 +3,15 @@
 # Code that creates the database automatically based on your man pages
 # Code that installs a llama model and gets it ready to go on your computer
 
-# filesystem setup - run if you're in a VM to update everything and expand root size to max
+# # filesystem setup - run if you're in a VM to update everything and expand root size to max
 # sudo apt update && sudo apt upgrade -y
 # sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
 # sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
+# sudo apt install python3.12-venv
+# python3 -m venv venv
+# source venv/bin/activate
+# pip3 install -r requirements.txt 
+# sudo apt install sqlite3
 
 # ollama setup
 
