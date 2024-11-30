@@ -13,7 +13,7 @@
 curl -fsSL https://ollama.com/install.sh | sh
 ollama
 ollama serve
-ollama pull llama2
+ollama pull llama2:7b
 
 # database setup
 
@@ -34,4 +34,4 @@ for cmd in $(compgen -c | sort -u); do
 done
 OUT_DIR=./manpages
 
-python3 manpages_to_sqlite.py
+# python3 manpages_to_sqlite.py

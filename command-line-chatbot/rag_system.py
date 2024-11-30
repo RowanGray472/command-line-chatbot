@@ -27,6 +27,8 @@ Stuff to have for all llm prompts
 
 import os
 import ollama
+import logging
+import sqlite3
 
 # TODO: Add something here that imports the database
 # TODO: Make all the prompts good
@@ -36,7 +38,7 @@ import ollama
 #################
 
 def run_llm(system, user):
-    response = ollama.chat(model='llama2', 
+    response = ollama.chat(model='llama2:7b', 
                            messages=[
                 {
                     'role': 'system',
@@ -294,8 +296,7 @@ def rag(text, db):
 
 
     """ 
-    user = f"Text: {text}\n\nManpages:\n\n" +
-    '\n\n'.join([f"{manpage['command']}\n{manpage['text']}" for manpage in manpages]) 
+    user = f"Text: {text}\n\nManpages:\n\n" + '\n\n'.join([f"{manpage['command']}\n{manpage['text']}" for manpage in manpages]) 
     return run_llm(system, user)
 
 class ManpagesDB:
