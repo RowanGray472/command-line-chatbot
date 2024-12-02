@@ -30,8 +30,6 @@ import ollama
 import logging
 import sqlite3
 import re
-import ast
-from sqlalchemy import text
 
 # TODO: Add something here that imports the database
 # TODO: Make all the prompts good
@@ -53,9 +51,9 @@ def run_llm(system, user):
                     "content": user,
                 }])
     print("returning llm", flush=True)
-    return(response['message']['content'])
+    return response['message']['content']
 
-def extract_keywords(text, seed=None):
+def extract_keywords(text):
     system = '''
     
     You are a professional journalist assigned with extracting keywor
@@ -244,12 +242,11 @@ def extract_keywords(text, seed=None):
 
     '''
     print("extracting keywords", flush=True)
-    text = run_llm(system, text)
-    print(f"DEBUG: text: {text}")
-    actual_list = ast.literal_eval(text)
-    print(f"DEBUG: actual_list: {actual_list}")
-    print("returning keywords", flush=True)
-    return actual_list
+    response = run_llm(system, text)
+    print(f"DEBUG: response: {response}", flush=True)
+    cleaned_response = re.sub(r"[\[\]']", "", text)
+    print(f"DEBUG: cleaned_response: {cleaned_response}")
+    return cleaned_response
 
 ####################
 # HELPER FUNCTIONS #
@@ -377,10 +374,11 @@ class ManpagesDB:
         
                     sql = f'''
                     INSERT INTO manpages (command, text)
-                    VALUES ({command_name}, {manpage_text})
+                    VALUES (?, ?)
                     '''
                     _logsql(sql)
                     cursor = self.db.cursor()
+                    cursor.execute(sql, (command_name, manpage_text))
         print("database complete", flush=True)
 
     def __len__(self):
@@ -400,17 +398,16 @@ class ManpagesDB:
         Return a list of manpages in the database that match the specified query.
         '''
         print("finding manpages", flush=True)
-        sql = text('''
+        sql = '''
         SELECT command, text
         FROM manpages
-        WHERE manpages MATCH :query
+        WHERE manpages MATCH ?
         ORDER BY rank
-        LIMIT :limit;
-        ''')
-        print(f"find_manpages sql: {sql}", flush=True)
+        LIMIT ?;
+        '''
         _logsql(sql)
         cursor = self.db.cursor()
-        cursor.execute(sql, {'query': query, 'limit': limit})
+        cursor.execute(sql, (query, limit))
         rows = cursor.fetchall()
 
         # Get column names from cursor description

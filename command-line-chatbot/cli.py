@@ -13,6 +13,7 @@ import logging
 
 def cli_output(text, db):
     output = rag(text, db) 
+    print(f"DEBUG: output: {output}")
 
     # Simulate typing the command
     for char in output:
