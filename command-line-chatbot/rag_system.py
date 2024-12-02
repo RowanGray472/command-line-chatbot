@@ -30,6 +30,8 @@ import ollama
 import logging
 import sqlite3
 import re
+import ast
+from sqlalchemy import text
 
 # TODO: Add something here that imports the database
 # TODO: Make all the prompts good
@@ -243,8 +245,11 @@ def extract_keywords(text, seed=None):
     '''
     print("extracting keywords", flush=True)
     text = run_llm(system, text)
+    print(f"DEBUG: text: {text}")
+    actual_list = ast.literal_eval(text)
+    print(f"DEBUG: actual_list: {actual_list}")
     print("returning keywords", flush=True)
-    return text
+    return actual_list
 
 ####################
 # HELPER FUNCTIONS #
@@ -395,16 +400,17 @@ class ManpagesDB:
         Return a list of manpages in the database that match the specified query.
         '''
         print("finding manpages", flush=True)
-        sql = f'''
+        sql = text('''
         SELECT command, text
         FROM manpages
-        WHERE manpages MATCH '{query}'
+        WHERE manpages MATCH :query
         ORDER BY rank
-        LIMIT {limit};
-        '''
+        LIMIT :limit;
+        ''')
+        print(f"find_manpages sql: {sql}", flush=True)
         _logsql(sql)
         cursor = self.db.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, {'query': query, 'limit': limit})
         rows = cursor.fetchall()
 
         # Get column names from cursor description
