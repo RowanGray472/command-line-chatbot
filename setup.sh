@@ -13,12 +13,6 @@
 # pip3 install -r requirements.txt 
 # sudo apt install sqlite3
 
-# ollama setup
-
-curl -fsSL https://ollama.com/install.sh | sh
-ollama
-ollama serve
-ollama pull llama2:7b
 
 # database setup
 

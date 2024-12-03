@@ -25,8 +25,11 @@ Stuff to have for all llm prompts
 """
 
 
+import groq
+from groq import Groq
 import os
-import ollama
+from dotenv import load_dotenv
+load_dotenv()
 import logging
 import sqlite3
 import re
@@ -38,21 +41,29 @@ import re
 # LLM FUNCTIONS #
 #################
 
-def run_llm(system, user):
-    print("running llm (inner)", flush=True)
-    response = ollama.chat(model='llama2:7b', 
-                           messages=[
-                {
-                    'role': 'system',
-                    'content': system,
-                },
-                {
-                    "role": "user",
-                    "content": user,
-                }])
-    print("returning llm", flush=True)
-    return response['message']['content']
+client = Groq(
+    api_key=os.environ.get("GROQ_API_KEY"),
+)
 
+def run_llm(system, user, model='llama3-8b-8192', seed=None):
+    '''
+    This is a helper function for all the uses of LLMs in this file.
+    '''
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                'role': 'system',
+                'content': system,
+            },
+            {
+                "role": "user",
+                "content": user,
+            }
+        ],
+        model=model,
+        seed=seed,
+    )
+    return chat_completion.choices[0].message.content
 def extract_keywords(text):
     system = '''
     
