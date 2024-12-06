@@ -136,121 +136,6 @@ def extract_keywords(text):
     INPUT: "search for a file in the filesystem"
     OUTPUT: ['find', 'search', 'file', 'filesystem']
 
-    INPUT: "see the first 10 lines of a file"
-    OUTPUT: ['head', 'file', 'lines', 'view']
-
-    INPUT: "see the last 10 lines of a file"
-    OUTPUT: ['tail', 'file', 'lines', 'view']
-
-    INPUT: "check which shell I'm using"
-    OUTPUT: ['echo', '$SHELL', 'shell', 'current']
-
-    INPUT: "make a new directory"
-    OUTPUT: ['mkdir', 'make', 'directory']
-
-    INPUT: "see the current working directory"
-    OUTPUT: ['pwd', 'current', 'working', 'directory']
-
-    INPUT: "create an empty file"
-    OUTPUT: ['touch', 'create', 'file', 'empty']
-
-    INPUT: "concatenate two files"
-    OUTPUT: ['cat', 'concatenate', 'files']
-
-    INPUT: "check running processes"
-    OUTPUT: ['ps', 'process', 'running', 'status']
-
-    INPUT: "terminate a process by its ID"
-    OUTPUT: ['kill', 'process', 'terminate', 'ID']
-
-    INPUT: "download a file from a URL"
-    OUTPUT: ['wget', 'curl', 'download', 'file', 'URL']
-
-    INPUT: "change permissions on a file"
-    OUTPUT: ['chmod', 'file', 'permissions', 'change']
-
-    INPUT: "check disk space usage"
-    OUTPUT: ['df', 'disk', 'space', 'usage']
-
-    INPUT: "switch to another user"
-    OUTPUT: ['su', 'sudo', 'user', 'switch']
-
-    INPUT: "schedule a task to run later"
-    OUTPUT: ['cron', 'at', 'schedule', 'task']
-
-    INPUT: "see the history of commands I've used"
-    OUTPUT: ['history', 'commands', 'log']
-
-    INPUT: "compare two files for differences"
-    OUTPUT: ['diff', 'cmp', 'compare', 'files', 'differences']
-
-    INPUT: "archive files into a single file"
-    OUTPUT: ['tar', 'archive', 'file', 'compression']
-
-    INPUT: "extract files from a compressed archive"
-    OUTPUT: ['unzip', 'tar', 'gunzip', 'extract', 'archive']
-
-    INPUT: "redirect output of a command to a file"
-    OUTPUT: ['>', 'redirect', 'output', 'file']
-
-    INPUT: "pipe output from one command to another"
-    OUTPUT: ['|', 'pipe', 'output', 'command']
-
-    INPUT: "check for updates in the package manager"
-    OUTPUT: ['apt', 'yum', 'update', 'package', 'manager']
-
-    INPUT: "install a package using a package manager"
-    OUTPUT: ['apt-get', 'yum', 'install', 'package', 'manager']
-
-    INPUT: "list all running services"
-    OUTPUT: ['systemctl', 'service', 'status', 'running']
-
-    INPUT: "view log files"
-    OUTPUT: ['tail', 'log', 'view', 'logs']
-
-    INPUT: "find all files that are larger than 1GB"
-    OUTPUT: ['find', 'size', 'greater', '1GB', 'files']
-
-    INPUT: "compress a directory into a .zip file"
-    OUTPUT: ['zip', 'compress', 'directory', '.zip', 'file']
-
-    INPUT: "change the owner of a file"
-    OUTPUT: ['chown', 'owner', 'file', 'change']
-
-    INPUT: "create a symbolic link to a file"
-    OUTPUT: ['ln', 'symbolic', 'link', 'file']
-
-    INPUT: "view the manual for a command"
-    OUTPUT: ['man', 'command', 'manual', 'help']
-
-    INPUT: "search through a file for a specific string"
-    OUTPUT: ['grep', 'search', 'file', 'string']
-
-    INPUT: "count the number of lines in a file"
-    OUTPUT: ['wc', 'count', 'lines', 'file']
-
-    INPUT: "show the first 100 lines of a file"
-    OUTPUT: ['head', 'file', 'lines', 'view', '100']
-
-    INPUT: "check the current system time"
-    OUTPUT: ['date', 'time', 'current']
-
-    INPUT: "see the usage of a command"
-    OUTPUT: ['man', 'help', 'usage', 'command']
-
-    INPUT: "count the number of files in a directory"
-    OUTPUT: ['ls', 'count', 'files', 'directory']
-
-    INPUT: "check the available memory on the system"
-    OUTPUT: ['free', 'memory', 'system']
-
-    INPUT: "change the group of a file"
-    OUTPUT: ['chgrp', 'group', 'file', 'change']
-
-    INPUT: "run a command with superuser privileges"
-    OUTPUT: ['sudo', 'superuser', 'privileges', 'command']
-
-
     '''
     print("extracting keywords", flush=True)
     response = run_llm(system, text)
@@ -304,15 +189,34 @@ def rag(text, db):
 
     ## DO NOT
 
-    Include anything in your output that isn't the command you think best matches the users query.
+    DO NOT Include anything in your output that isn't the command you think best matches the users query.
 
-    Explain why you chose the query you chose.
+    DO NOT Explain why you chose the query you chose.
 
-    Include anything in your output that isn't a Unix command.
+    DO NOT Include anything in your output that isn't a Unix command.
+
+    DO NOT Explain what the command you selected does.
 
     ## EXAMPLES
 
+    INPUT: 'go too the root directory'
 
+    OUTPUT: {cd /}
+
+    INPUT: 'list all files including hidden ones'
+    OUTPUT: {ls -a}
+
+    INPUT: 'move up one directory'
+    OUTPUT: {cd ..}
+
+    INPUT: 'create a new directory called "projects"'
+    OUTPUT: {mkdir projects}
+
+    INPUT: 'remove a file named "old_file.txt"'
+    OUTPUT: {rm old_file.txt}
+
+    INPUT: 'show the current working directory'
+    OUTPUT: {pwd}
 
     """ 
     print("building llm query", flush=True)
@@ -404,7 +308,7 @@ class ManpagesDB:
         row = cursor.fetchone()
         return row[0]
     
-    def find_manpages(self, query, limit=8):
+    def find_manpages(self, query, limit=2):
         '''
         Return a list of manpages in the database that match the specified query.
         '''
