@@ -11,12 +11,12 @@
 1. ainslee: write r/system_administration post
 1. ainslee: write blog post lol lmao
 1. ainslee: write infosec.exchange post
-1. make test cases (easy mode, non LLM stuff)
+1. make github actions test cases (easy mode, non LLM stuff)
 1. evil mode
 1. make it possible to be local
 1. make r/localllama post
 1. flake & comment code
-1. make test cases (hard mode, include LLM test cases)
+1. make github actions test cases (hard mode, include LLM test cases)
 1. whisper integration
 
 ## Modes
