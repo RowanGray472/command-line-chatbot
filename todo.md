@@ -6,19 +6,22 @@
 1. ainslee/rowan: make test environment
 1. ainslee/rowan: run tests
 1. ainslee/rowan: iterate prompt engineering as needed
-7. rowan/ainslee: work on readme
-1. rowan/ainslee: social media post
+1. rowan/ainslee: work on readme
+1. rowan: write linkedin post
+1. ainslee: write r/system_administration post
+1. ainslee: write blog post lol lmao
+1. ainslee: write infosec.exchange post
 1. make test cases (easy mode, non LLM stuff)
 1. evil mode
 1. flake & comment code
 1. make test cases (hard mode, include LLM test cases)
-8. whisper integration
+1. whisper integration
 
 ## Modes
-kiddie mode - can't access the command line
-normie mode - can access the command line, but mostly has read access
-pro mode - sudo, read/write/etc. can break the computer
-evil mode - "do evil" turns on evil mode and then run commands in a loop. no RAG, some prompt engineering.
+- kiddie mode - can't access the command line
+- normie mode - can access the command line, but mostly has read access
+- pro mode - sudo, read/write/etc. can break the computer
+- evil mode - "do evil" turns on evil mode and then run commands in a loop. no RAG, some prompt engineering.
 
 ## Todos for the computer
 ```
