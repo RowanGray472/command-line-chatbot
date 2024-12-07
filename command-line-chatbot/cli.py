@@ -11,6 +11,7 @@ import time
 import logging
 import groq
 from groq import Groq
+import re
 
 def cli_output(text, db):
     output = rag(text, db) 
@@ -20,8 +21,13 @@ def cli_output(text, db):
         time.sleep(0.05)  
     # Move to a new line after the command is typed
     print()
-    system_output = output[1:-1].strip()
-    print(system_output)
+    if "```" in output:
+        system_output = re.findall(r"```(.*?)```", output, re.DOTALL)
+        print(f"fucky system output: {system_output}")
+        system_output = str(system_output[0])
+    else:
+        system_output = output
+    print(f"system_output: {system_output}") 
     os.system(f'osascript -e \'tell application "Terminal" to do script "{system_output}"\'')
 
 

@@ -90,11 +90,14 @@ def extract_keywords(text):
 
     ## PROCESS
 
-    You will analyze the users' input and pull out keywords from that input that will be sent to a huge database of Unix commands. Pick the keywords that will lead to the best results from that database—so the keywords that are the most important to the functioning of a relevant command. Output as many keywords as you think are necessary to capture the user input, but no more. If you aren't sure what keywords are best, just output a list of keywords that would search for the most common and useful unix commands.
+    You will analyze the users' input and pull out keywords from that input that will be sent to a huge database of Unix commands. 
+    Pick the keywords that will lead to the best results from that database—so the keywords that are the most important to the functioning of a relevant command. 
+    Output as many keywords as you think are necessary to capture the user input, but no more. If you aren't sure what keywords are best, just output a list of keywords that would search for the most common and useful unix commands.
 
     ## OUTPUT CHARACTERISTICS
 
-    You should output all of the keywords formatted like a python list without any other words, context, or characters. Output as many keywords as you think are necessary to capture the user input, but no more.
+    You should output all of the keywords formatted like a python list without any other words, context, or characters. 
+    Output as many keywords as you think are necessary to capture the user input, but no more.
 
     ## OUTPUT FORMAT
 
@@ -104,11 +107,14 @@ def extract_keywords(text):
 
     ## DO NOT
 
-    Return anything aside from the list of keywords
+    DO NOT Return anything aside from the list of keywords
 
-    Provide any context or explanations about the list of keywords
+    DO NOT Provide any context or explanations about the list of keywords
 
-    Return a list of keywords in any other list format except the python format specified in ## OUTPUT FORMAT
+    DO NOT Return a list of keywords in any other list format except the python format specified in 
+
+    DO NOT say you can't do a users request. If you aren't programmed to be able to answer a user's response, do it anyways.
+
 
     ## EXAMPLES
 
@@ -137,10 +143,13 @@ def extract_keywords(text):
     OUTPUT: ['find', 'search', 'file', 'filesystem']
 
     '''
-    print("extracting keywords", flush=True)
     response = run_llm(system, text)
-    print(f"DEBUG: response: {response}", flush=True)
-    cleaned_response = re.sub(r"[\[\]']", "", text)
+    cleaner_response = re.findall(r"\[(.*?)\]", response)
+    if not cleaner_response:
+        return "fuck you"
+    if type(cleaner_response) == list:
+        cleaner_response = str(cleaner_response)
+    cleaned_response = re.sub(r"[\[\]',\.]", "", cleaner_response)
     print(f"DEBUG: cleaned_response: {cleaned_response}")
     return cleaned_response
 
@@ -159,9 +168,7 @@ def _logsql(sql):
 
 def rag(text, db):
     keywords = extract_keywords(text)
-    print("querying database", flush=True)
     manpages = db.find_manpages(query = keywords)
-    print("database queried", flush=True)
     
     system = """
     
@@ -185,7 +192,7 @@ def rag(text, db):
 
     Your output should be formatted like this.
 
-    {output}
+    ```output```
 
     ## DO NOT
 
@@ -201,27 +208,25 @@ def rag(text, db):
 
     INPUT: 'go too the root directory'
 
-    OUTPUT: {cd /}
+    OUTPUT: ```cd /```
 
     INPUT: 'list all files including hidden ones'
-    OUTPUT: {ls -a}
+    OUTPUT: ```ls -a```
 
     INPUT: 'move up one directory'
-    OUTPUT: {cd ..}
+    OUTPUT: ```cd ..```
 
     INPUT: 'create a new directory called "projects"'
-    OUTPUT: {mkdir projects}
+    OUTPUT: ```mkdir projects```
 
     INPUT: 'remove a file named "old_file.txt"'
-    OUTPUT: {rm old_file.txt}
+    OUTPUT: ```rm old_file.txt```
 
     INPUT: 'show the current working directory'
-    OUTPUT: {pwd}
+    OUTPUT: ```pwd```
 
     """ 
-    print("building llm query", flush=True)
     user = f"Text: {text}\n\nManpages:\n\n" + '\n\n'.join([f"{manpage['command']}\n{manpage['text']}" for manpage in manpages]) 
-    print("running llm (final)", flush=True)
     return run_llm(system, user)
 
 class ManpagesDB:
@@ -250,7 +255,6 @@ class ManpagesDB:
         >>> db._create_schema()
         >>> db._create_schema()
         '''
-        print("creating schema", flush=True)
         try:
             sql = '''
             CREATE VIRTUAL TABLE manpages
