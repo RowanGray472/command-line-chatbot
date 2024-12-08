@@ -1,15 +1,29 @@
 ## Todos for us
 
-1. ainslee- do all the rights management stuff and make the bash wrapper (pls be functional)
-2. rowan/ainslee- fuck around with code org
-3. get chatgpt to give us a list of 20 tasks- audit it
-4. input all these tasks and make sure they work- also make the files to make this possible
-5. document this
-6. freestyle mode
-7. rowan/ainslee- work on readme
-8. whisper integration
-9. social media post
+1. ainslee: do all the rights management stuff for kiddie/normie/pro
+1. ainslee: bash wrapper
+1. rowan: fuck around with code org
+1. ainslee/rowan: make test environment
+1. ainslee/rowan: run tests
+1. ainslee/rowan: iterate prompt engineering as needed
+1. rowan/ainslee: work on readme
+1. rowan: write linkedin post
+1. ainslee: write r/system_administration post
+1. ainslee: write blog post lol lmao
+1. ainslee: write infosec.exchange post
+1. make github actions test cases (easy mode, non LLM stuff)
+1. evil mode
+1. make it possible to be local
+1. make r/localllama post
+1. flake & comment code
+1. make github actions test cases (hard mode, include LLM test cases)
+1. whisper integration
 
+## Modes
+- kiddie mode - can't access the command line
+- normie mode - can access the command line, but mostly has read access
+- pro mode - sudo, read/write/etc. can break the computer
+- evil mode - "do evil" turns on evil mode and then run commands in a loop. no RAG, some prompt engineering.
 
 ## Todos for the computer
 ```
