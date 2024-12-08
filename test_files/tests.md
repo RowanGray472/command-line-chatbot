@@ -22,5 +22,6 @@
 | Display the current working directory path | Navigation | y | 18 |
 | Create a tar archive named `backup.tar` containing all `.txt` files in the current directory | File Management | y | 19 |
 | Extract the `backup.tar` archive into a new directory named `extracted_backup` | File Management | y | 20 |
+| Find the file named `bee_movie.txt` on this computer and search for all the times the word 'bee' appears in it | Analysis | y | 21 |
 
 ty chatgpt <3
