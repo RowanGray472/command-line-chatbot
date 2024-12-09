@@ -26,7 +26,7 @@ for root, _, files in os.walk(MANPAGES_DIR):
                 with open(meta_path, "r") as meta_file:
                     command_name = meta_file.read().strip()
             else:
-                command_name = os.path.splitext(file)[0] # Fallback to file name
+                command_name = os.path.splitext(file)[0]  # Fallback to file name
 
             cursor.execute("""
             INSERT INTO manpages (command_name, manpage_text)

@@ -9,6 +9,7 @@ load_dotenv()
 # HELPER FUNCTIONS #
 ####################
 
+
 def _logsql(sql):
     rex = re.compile(r'\W+')
     sql_dewhite = rex.sub(' ', sql)
@@ -17,6 +18,7 @@ def _logsql(sql):
 ######################
 # DATABASE FUNCTIONS #
 ######################
+
 
 class ManpagesDB:
     '''
@@ -28,7 +30,7 @@ class ManpagesDB:
     '''
     def __init__(self, filename=':memory:'):
         self.db = sqlite3.connect(filename)
-        self.db.row_factory=sqlite3.Row
+        self.db.row_factory = sqlite3.Row
         self.logger = logging
         self._create_schema()
         self._add_manpages()
@@ -73,14 +75,14 @@ class ManpagesDB:
                     meta_path = os.path.splitext(txt_path)[0] + ".meta"
                     with open(txt_path, "r") as txt_file:
                         manpage_text = txt_file.read()
-        
+
                     if os.path.exists(meta_path):
                         with open(meta_path, "r") as meta_file:
                             command_name = meta_file.read().strip()
                     else:
-                        command_name = os.path.splitext(file)[0] # Fallback to file name
-        
-                    sql = f'''
+                        command_name = os.path.splitext(file)[0]  # Fallback to file name
+
+                    sql = '''
                     INSERT INTO manpages (command, text)
                     VALUES (?, ?)
                     '''
@@ -100,7 +102,7 @@ class ManpagesDB:
         cursor.execute(sql)
         row = cursor.fetchone()
         return row[0]
-    
+
     def find_manpages(self, query, limit=2):
         '''
         Return a list of manpages in the database that match the specified query.
@@ -125,6 +127,7 @@ class ManpagesDB:
         print("returning manpages", flush=True)
         return row_dict
 
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)
@@ -145,4 +148,3 @@ if __name__ == '__main__':
         if len(user_text.strip()) > 0:
             output = rag(user_text, m_db)
             print(output)
-
