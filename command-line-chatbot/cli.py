@@ -1,25 +1,25 @@
-"""
-
-This file will include all command line outputs/inputs
-
-"""
-
-import os
 import argparse
-from rag_system import rag, ManpagesDB
 import time
-import logging
 import re
 
+# Import your RAG and Baseline modules
+from rag_system import rag, ManpagesDB
+from baseline_system import baseline
 
-def cli_output(text, db):
-    output = rag(text, db)
+def cli_output(text, db, mode):
+    if mode == "rag":
+        output = rag(text, db)
+    elif mode == "baseline":
+        output = baseline(text, db)
+    else:
+        raise ValueError(f"Unknown mode: {mode}")
+
     # Simulate typing the command
     for char in output:
         print(char, end='', flush=True)
         time.sleep(0.05)
-    # Move to a new line after the command is typed
-    print()
+    print()  # Move to a new line after typing
+
     if "```" in output:
         system_output = re.findall(r"```(.*?)```", output, re.DOTALL)
         system_output = str(system_output[0])
@@ -38,25 +38,27 @@ if __name__ == "__main__":
         "--text",
         type=str,
         required=True,
-        help="Input text to process with the RAG system."
+        help="Input text to process with the RAG or Baseline system."
     )
 
     parser.add_argument(
-            "--db",
-            type=str,
-            required=False,
-            default='manpages.db',
-            help="Path to the database file."
+        "--mode",
+        type=str,
+        default="rag",
+        choices=["rag", "baseline"],
+        help="Mode to run the system: 'rag' or 'baseline'."
+    )
+
+    parser.add_argument(
+        "--db",
+        type=str,
+        required=False,
+        default='manpages.db',
+        help="Path to the database file."
     )
 
     args = parser.parse_args()
 
-    logging.basicConfig(
-        format='%(asctime)s %(levelname)-8s %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S',
-        level=args.loglevel.upper(),
-        )
-
     db = ManpagesDB(args.db)
 
-    cli_output(args.text, db)
+    cli_output(args.text, db, args.mode)
