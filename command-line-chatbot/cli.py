@@ -26,8 +26,7 @@ def cli_output(text, db):
         system_output = str(system_output[0])
     else:
         system_output = output
-    print(f"system_output: {system_output}")
-    os.system(f'osascript -e \'tell application "Terminal" to do script "{system_output}"\'')
+    print(f"!runme: {system_output}")
 
 
 if __name__ == "__main__":
