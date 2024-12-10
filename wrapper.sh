@@ -71,7 +71,14 @@ command_to_run=$(echo "$output" | perl -nle'print $& while m{(?<=!runme: ).*}g')
 # Check if a command was found
 if [ -z "$command_to_run" ]; then
     echo "No command found in the Python script output."
+    if [ "$BASH_SUBSHELL" -gt 0 ]; then
+    echo "Exiting with error in subshell..."
     exit 1
+else
+    echo "Error encountered, but not exiting main shell."
+    return 1
+fi
+
 fi
 
 # Execute based on mode
@@ -89,7 +96,14 @@ case $mode in
         echo "Pro mode: Running the command with sudo privileges."
         if ! sudo -n true 2>/dev/null; then
             echo "Error: Sudo privileges are required but not available."
-            exit 1
+            if [ "$BASH_SUBSHELL" -gt 0 ]; then
+                echo "Exiting with error in subshell..."
+                exit 1
+            else
+                echo "Error encountered, but not exiting main shell."
+                return 1
+            fi
+
         fi
         typing_echo "$command_to_run"
         sudo bash -c "$command_to_run"
