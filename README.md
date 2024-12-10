@@ -8,21 +8,6 @@ CLIFF uses RAG to familiarize the `llama-3.3-70b-versatile` model with command l
 
 By [Rowan](https://github.com/RowanGray472) and [Ainslee](https://github.com/ains-arch)
 
-## Quick Demo
-
-Here's a short demo to give you an idea of what CLIFF can do when it's fully functional.
-Say you wanted to go to your home directory, but you forgot the command for how to do that.
-Sure, you *could* google it, or you could use CLIFF  to just do it directly.
-
-Here's how that workflow goes for our home directory example.
-
-```
-$ source env/bin/activate
-$ sudo ./wrapper.sh -p "go to the root directory"
-$ Pro mode: Running the command with sudo privileges.
-$ ls
-```
-
 > **NOTE:**
 > CLIFF, since it relies on llms, is nondeterministic. 
 > You *will not* get the same results every time from the same command. 
@@ -75,6 +60,10 @@ $ source ./wrapper.sh -n "your query" # normie mode
 $ sudo ./wrapper.sh -p "your query" # pro mode
 ```
 
+> **NOTE:**
+> Normal mode currently doesn't work on Macs
+> They haven't been generous enough to add rbash yet
+
 ## Capabilities and results
 
 Here, we'll show off some of CLIFF's capabilities.
@@ -125,7 +114,7 @@ Here's a table of all the tests we ran on this system- on all modes.
 | Display the total number of files in the current directory | Analysis | y | 12 |
 | Display the size of a specific file `setup.sh` in bytes | Analysis | y | 13 |
 | Find all files in the current directory with the `.txt` extension | Analysis | y | 14 |
-| Search for the word "Hello" in all `.txt` files in the current directory | Analysis | n | 15 |
+| Search for the word "Hello" in all `.txt` files in the current directory | Analysis | y | 15 |
 | Count the number of lines in `test_file.txt` | Analysis | y | 16 |
 | Display the most recently modified file in the current directory | Analysis | y | 17 |
 | Display the current working directory path | Navigation | y | 18 |
@@ -144,5 +133,3 @@ It gets the top two most relevant pages from the database (where relevance is de
 Then it uses those two pages, your input, and our engineered prompt to generate a short shell script.
 
 Then, our wrapper extract that generated script and checks what mode we're in—if we're in kiddie mode it just prints the statement, if we're in normie mode it opens a new rbash terminal and runs it, if we're in pro mode it just runs the statement in your current terminal with all permissions.
-
-
