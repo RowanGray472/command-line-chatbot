@@ -25,9 +25,9 @@ paste example here
 
 ```
 
-    > **NOTE:**
-    > This system, since it relies on llms, is nondeterministic. 
-    > You *will not* get the same results every time from the same command. 
+> **NOTE:**
+> This system, since it relies on llms, is nondeterministic. 
+> You *will not* get the same results every time from the same command. 
 
 
 ## More Technical Explanation
@@ -38,7 +38,7 @@ Our setup script creates a database on your computer that contains all the manpa
 Once you call the bot, it analyzes your request to search for keywords with which to query the database.
 It gets the top two most relevant pages from the database (where relevance is defined by the FTS5 algorithm)
 Then it uses those two pages, your input, and our engineered prompt to generate a short shell script.
-    > PUT REST OF EXPLANATION HERE ONCE AINSLEE FINISHES STUFF
+> PUT REST OF EXPLANATION HERE ONCE AINSLEE FINISHES STUFF
 
 
 ## Full Setup Instructions
@@ -62,7 +62,7 @@ chmod +x setup.sh
 
 This will setup your manpages database.
 Now you're all ready to go! Make queries using
-    > PUT REST HERE ONCE AINLEE FINISHES
+> PUT REST HERE ONCE AINLEE FINISHES
 
 4. more full demo
 
