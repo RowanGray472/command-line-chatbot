@@ -14,12 +14,6 @@ def cli_output(text, db, mode):
     else:
         raise ValueError(f"Unknown mode: {mode}")
 
-    # Simulate typing the command
-    for char in output:
-        print(char, end='', flush=True)
-        time.sleep(0.05)
-    print()  # Move to a new line after typing
-
     if "```" in output:
         system_output = re.findall(r"```(.*?)```", output, re.DOTALL)
         system_output = str(system_output[0])
