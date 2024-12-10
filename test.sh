@@ -61,4 +61,4 @@ echo "PRO MODE"
 echo "List files in the /root directory"
 sudo ./wrapper.sh -p "List files in the /root directory"
 
-echo "DONE WITH THESTS"
+echo "DONE WITH TESTS"
