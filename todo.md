@@ -1,11 +1,19 @@
 ## Todos for us
 
-1. ainslee: do all the rights management stuff for kiddie/normie/pro
-1. ainslee: bash wrapper
-1. rowan: fuck around with code org
-1. ainslee/rowan: make test environment
-1. ainslee/rowan: run tests
+--- tonight/before rowan wakes up tomorrow
+1. ainslee
+    1. GET RID OA AND REPLACE WITH TEXT BLOCK -> REGEX -> BASH
+    1. DOUBLE CHECK SQL ESCAPING
+    1. RIGHTS MANAGEMENT
+        1. kiddie and pro mode
+        1. make a list of commands it can use
+        1. llm layer to notice non-read commands
+        1. make a user
+    1. double check tests shit, make sure it works with bash wrapper
+    1. make sure github actions work with bash wrapper
+1. ainslee/rowan: rerun tests
 1. ainslee/rowan: iterate prompt engineering as needed
+--- tomorrow
 1. rowan/ainslee: work on readme
 1. rowan: write linkedin post
 1. ainslee: write r/system_administration post
@@ -15,7 +23,6 @@
 1. evil mode
 1. make it possible to be local
 1. make r/localllama post
-1. flake & comment code
 1. make github actions test cases (hard mode, include LLM test cases)
 1. whisper integration
 
