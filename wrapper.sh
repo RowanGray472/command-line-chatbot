@@ -13,16 +13,17 @@ usage() {
     echo "  -b, --baseline  : Run the model without RAG."
 }
 
-# Function to echo text with a typing effect
-typing_echo() {
-    local text="$1"
-    local delay=0.05  # Adjust this delay as needed
-    while IFS= read -r -n1 char; do
-        echo -n "$char"
-        sleep "$delay"
-    done <<< "$text"
-    echo  # Move to a new line after the text
-}
+#typing_echo() {
+#    local text="$1"
+#    local delay=0.05  # Adjust this delay as needed
+#    IFS=  # Explicitly unset IFS
+#    while read -r -n1 char; do
+#        echo -n "$char"
+#        sleep "$delay"
+#    done <<< "$text"
+#    echo  # Move to a new line after the text
+#}
+
 
 # Default mode
 mode="normie"
@@ -94,11 +95,11 @@ case $mode in
     "kiddie")
         echo "Kiddie mode: Not executing the command."
         echo "$command_to_run"
-        typing_echo "$command_to_run"
+        echo "$command_to_run"
         ;;
     "normie")
         echo "Normie mode: Running the command in a restricted shell."
-        typing_echo "$command_to_run"
+        echo "$command_to_run"
         rbash -c "$command_to_run"
         ;;
     "pro")
@@ -114,12 +115,12 @@ case $mode in
             fi
 
         fi
-        typing_echo "$command_to_run"
+        echo "$command_to_run"
         sudo bash -c "$command_to_run"
         ;;
     "baseline")
         echo "Baseline model: Not executing command."
-        typing_echo "$command_to_run"
+        echo "$command_to_run"
         ;;
     *)
         echo "Unknown mode: $mode"

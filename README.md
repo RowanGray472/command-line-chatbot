@@ -12,7 +12,7 @@ By [Rowan](https://github.com/RowanGray472) and [Ainslee](https://github.com/ain
 
 Here's a short demo to give you an idea of what CLIFF can do when it's fully functional.
 Say you wanted to go to your home directory, but you forgot the command for how to do that.
-Sure, you *could* go plug it into google, or you could use CLIFF  to just do it directly.
+Sure, you *could* google it, or you could use CLIFF  to just do it directly.
 
 Here's how that workflow goes for our home directory example.
 
@@ -70,9 +70,9 @@ Be careful!
 Here's what implementing the three modes looks like- the flags correspond to the modes.
 
 ```
-$ source ./wrapper.sh -k "your query"
-$ source ./wrapper.sh -n "your query"
-$ sudo ./wrapper.sh -p "your query"
+$ source ./wrapper.sh -k "your query" # kiddie mode
+$ source ./wrapper.sh -n "your query" # normie mode
+$ sudo ./wrapper.sh -p "your query" # pro mode
 ```
 
 ## Capabilities and results
@@ -104,7 +104,8 @@ $ grep -o 'bee' test_files/bee-movie.txt | wc -l
      166
 ```
 
-Now let's look at the results a bit more vigorously. Here's a table of all the tests we ran on this system- on all modes.
+Now let's look at the results a bit more vigorously. 
+Here's a table of all the tests we ran on this system- on all modes.
 
 | Test | Test Type | Passes | # |
 |------|-----------|--------|---|
