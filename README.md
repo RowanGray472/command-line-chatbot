@@ -8,7 +8,6 @@ CLIFF uses RAG to familiarize the `llama-3.3-70b-versatile` model with Unix comm
 
 By [Rowan](https://github.com/RowanGray472) and [Ainslee](https://github.com/ains-arch)
 
-
 ## Quick Demo
 
 Here's a short demo to give you an idea of what CLIFF can do when it's fully functional.
@@ -130,8 +129,8 @@ Now let's look at the results a bit more vigorously. Here's a table of all the t
 | Display the most recently modified file in the current directory | Analysis | y | 17 |
 | Display the current working directory path | Navigation | y | 18 |
 | Create a tar archive named `backup.tar` containing all `.txt` files in the current directory | File Management | y | 19 |
-| Extract the `backup.tar` archive into a new directory named `extracted_backup` | File Management | n | 20 |
-| Find the file named `bee_movie.txt` in a directory that's in this directory named `test_files` and search for all the times the word 'bee' appears in it | Analysis | n | 21 |
+| Extract the `backup.tar` archive into a new directory named `extracted_backup` | File Management | y | 20 |
+| Find the file named `bee_movie.txt` in a directory that's in this directory named `test_files` and search for all the times the word 'bee' appears in it | Analysis | y | 21 |
 
 
 ## More Technical Explanation

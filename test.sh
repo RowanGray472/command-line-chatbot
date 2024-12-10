@@ -50,8 +50,8 @@ echo "Create a tar archive named \`backup.tar\` containing all \`.txt\` files in
 source ./wrapper.sh -k "Create a tar archive named \`backup.tar\` containing all \`.txt\` files in the current directory"
 echo "Extract the \`backup.tar\` archive into a new directory named \`extracted_backup\`" 
 source ./wrapper.sh -k "Extract the \`backup.tar\` archive into a new directory named \`extracted_backup\`"
-echo "Find the file named \`bee_movie.txt\` on this computer and search for all the times the word 'bee' appears in it" 
-source ./wrapper.sh -k "Find the file named \`bee_movie.txt\` on this computer and search for all the times the word 'bee' appears in it"
+echo "Find the file named \`bee_movie.txt\` in a directory that's in this directory named `test_files` and search for all the times the word 'bee' appears in it" 
+source ./wrapper.sh -k "Find the file named \`bee_movie.txt\` in a directory that's in this directory named `test_files`  and search for all the times the word 'bee' appears in it"
 
 echo "NORMIE MODE"
 echo "List all the files, including hidden files, in the current directory" 
