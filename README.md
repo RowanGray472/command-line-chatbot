@@ -1,10 +1,10 @@
 # CLIFF
 
-![Tests](https://github.com/RowanGray472/cs181hw1/actions/workflows/tests.yml/badge.svg)
+![Tests](https://github.com/RowanGray472/command-line-chatbot/actions/workflows/tests.yml/badge.svg)
  
 This repo contains a chatbot that can interact with your command line and help you with system administration.
 It's named CLIFF- which stands for Command Line Interface Friendly Facilitator.
-CLIFF uses RAG to familiarize the `llama-3.3-70b-versatile` model with Unix commands.
+CLIFF uses RAG to familiarize the `llama-3.3-70b-versatile` model with command line interface commands.
 
 By [Rowan](https://github.com/RowanGray472) and [Ainslee](https://github.com/ains-arch)
 
@@ -18,7 +18,7 @@ Here's how that workflow goes for our home directory example.
 
 ```
 $ source env/bin/activate
-$ source ./wrapper.sh -p "go to the root directory"
+$ sudo ./wrapper.sh -p "go to the root directory"
 $ Pro mode: Running the command with sudo privileges.
 $ ls
 ```
@@ -92,7 +92,7 @@ Here's it counting the number of files in our current directory!
 $ sudo ./wrapper.sh -p "Display the total number of files in the current directory"                  
 $ Pro mode: Running the command with sudo privileges.
 $ ls | wc -l
-$       26
+     26
 ```
 
 Here's it finding the bee movie file and counting the number of times it contains the word 'bee'!
@@ -101,7 +101,7 @@ Here's it finding the bee movie file and counting the number of times it contain
 $ sudo ./wrapper.sh -p "Find the file named \`bee-movie.txt\` on this computer and count all the times the word 'bee' appears in it. It's in a directory named test_files in the current directory."
 $ Pro mode: Running the command with sudo privileges.
 $ grep -o 'bee' test_files/bee-movie.txt | wc -l
-$     166
+     166
 ```
 
 Now let's look at the results a bit more vigorously. Here's a table of all the tests we ran on this system- on all modes.
@@ -131,7 +131,6 @@ Now let's look at the results a bit more vigorously. Here's a table of all the t
 | Create a tar archive named `backup.tar` containing all `.txt` files in the current directory | File Management | y | 19 |
 | Extract the `backup.tar` archive into a new directory named `extracted_backup` | File Management | y | 20 |
 | Find the file named `bee_movie.txt` in a directory that's in this directory named `test_files` and search for all the times the word 'bee' appears in it | Analysis | y | 21 |
-
 
 ## More Technical Explanation
 
