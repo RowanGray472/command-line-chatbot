@@ -3,7 +3,6 @@
 # Check if an argument was passed
 if [ -z "$1" ]; then
     echo "Usage: $0 \"command text\""
-    exit 1
 fi
 
 # Run the Python script and capture its output
@@ -14,7 +13,7 @@ echo "Full Python script output:"
 echo "$output"
 
 # Extract the command marked with "!runme:"
-command_to_run=$(echo "$output" | grep -oP '(?<=!runme: ).*')
+command_to_run=$(echo "$output" | perl -nle'print $& while m{(?<=!runme: ).*}g')
 
 # Check if a command was found
 if [ -z "$command_to_run" ]; then
