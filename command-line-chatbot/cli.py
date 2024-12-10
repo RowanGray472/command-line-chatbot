@@ -22,11 +22,9 @@ def cli_output(text, db):
     print()
     if "```" in output:
         system_output = re.findall(r"```(.*?)```", output, re.DOTALL)
-        print(f"fucky system output: {system_output}")
         system_output = str(system_output[0])
     else:
         system_output = output
-    print(f"!runme: {system_output}")
 
 
 if __name__ == "__main__":

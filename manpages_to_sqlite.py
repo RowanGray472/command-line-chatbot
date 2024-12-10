@@ -35,4 +35,3 @@ for root, _, files in os.walk(MANPAGES_DIR):
 conn.commit()
 conn.close()
 
-print(f"manpages inserted into {DATABASE_FILE}.")

@@ -61,13 +61,11 @@ class ManpagesDB:
         # then do nothing
         except sqlite3.OperationalError:
             self.logger.debug('CREATE TABLE failed')
-        # print("schema created", flush=True)
 
     def _add_manpages(self, directory='manpages'):
         '''
         Adds the manpages in the system memory.
         '''
-        # print("adding manpages to database", flush=True)
         for root, _, files in os.walk(directory):
             for file in files:
                 if file.endswith(".txt"):
@@ -89,7 +87,6 @@ class ManpagesDB:
                     _logsql(sql)
                     cursor = self.db.cursor()
                     cursor.execute(sql, (command_name, manpage_text))
-        # print("database complete", flush=True)
 
     def __len__(self):
         sql = '''
@@ -107,7 +104,6 @@ class ManpagesDB:
         '''
         Return a list of manpages in the database that match the specified query.
         '''
-        # print("finding manpages", flush=True)
         sql = '''
         SELECT command, text
         FROM manpages
@@ -124,7 +120,6 @@ class ManpagesDB:
         columns = [column[0] for column in cursor.description]
         # Convert rows to a list of dictionaries
         row_dict = [dict(zip(columns, row)) for row in rows]
-        # print("returning manpages", flush=True)
         return row_dict
 
 
@@ -147,4 +142,3 @@ if __name__ == '__main__':
         user_text = input('rag> ')
         if len(user_text.strip()) > 0:
             output = rag(user_text, m_db)
-            # print(output)

@@ -64,7 +64,7 @@ Now you're all ready to go! Make queries using
 
 4. more full demo
 
-
+> don't forget to add- if you want to directly query the database you made you'll need to sudo apt install sqlite
 
 5. tests/results
 
