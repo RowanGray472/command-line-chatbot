@@ -25,7 +25,7 @@ def cli_output(text, db):
         system_output = str(system_output[0])
     else:
         system_output = output
-
+    print(f"!runme: {system_output}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(

@@ -20,7 +20,7 @@ Then, the machine cooks, and runs the command for you.
 Here's what that might look like for our home directory example.
 
 ```
-paste example here
+source ./wrapper.sh "go to the root directory"
 ```
 
 > **NOTE:**
