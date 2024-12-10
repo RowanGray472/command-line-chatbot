@@ -92,7 +92,7 @@ case $mode in
             exit 1
         fi
         typing_echo "$command_to_run"
-        eval "$command_to_run"
+        sudo bash -c "$command_to_run"
         ;;
     *)
         echo "Unknown mode: $mode"
