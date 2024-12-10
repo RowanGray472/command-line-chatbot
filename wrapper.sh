@@ -65,10 +65,6 @@ command_text="$1"
 # Run the Python script and capture its output
 output=$(python3 command-line-chatbot/cli.py --text "$command_text")
 
-# Debug: print the full output for verification
-echo "Full Python script output:"
-echo "$output"
-
 # Extract the command marked with "!runme:"
 command_to_run=$(echo "$output" | perl -nle'print $& while m{(?<=!runme: ).*}g')
 
@@ -77,9 +73,6 @@ if [ -z "$command_to_run" ]; then
     echo "No command found in the Python script output."
     exit 1
 fi
-
-# Debug: print the extracted command for verification
-echo "Command to run: $command_to_run"
 
 # Execute based on mode
 case $mode in
