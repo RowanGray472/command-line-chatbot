@@ -1,0 +1,10 @@
+$ source ./wrapper.sh -k "move to home directory"
+should work
+$ source ./wrapper.sh -n "move to home directory"
+should fail, rbash doesn't have cd priv
+$ source ./wrapper.sh -n "cat setup.sh"
+should work
+$ source ./wrapper.sh -p "list files in /root directory"
+should print the doesn't have sudo error
+$ sudo ./wrapper.sh -p "list files in /root directory"
+should work, assuming there's actually something in the /root directory to list
