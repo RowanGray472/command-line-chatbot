@@ -20,9 +20,7 @@ Then, the machine cooks, and runs the command for you.
 Here's what that might look like for our home directory example.
 
 ```
-
 paste example here
-
 ```
 
 > **NOTE:**
@@ -49,15 +47,15 @@ You can get that key [here](https://console.groq.com/keys).
 Get into that environment by running
 
 ```
-python3 -m venv env
-source env/bin/activate
+$ python3 -m venv env
+$ source env/bin/activate
 ```
 
 Then, make setup.sh executable and run it using
 
 ```
-chmod +x setup.sh
-./setup.sh
+$ chmod +x setup.sh
+$ ./setup.sh
 ```
 
 This will setup your manpages database.
