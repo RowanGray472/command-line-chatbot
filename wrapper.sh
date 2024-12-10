@@ -93,6 +93,7 @@ fi
 case $mode in
     "kiddie")
         echo "Kiddie mode: Not executing the command."
+        echo "$command_to_run"
         typing_echo "$command_to_run"
         ;;
     "normie")
