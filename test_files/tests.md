@@ -16,12 +16,12 @@
 | Display the total number of files in the current directory | Analysis | y | 12 |
 | Display the size of a specific file `{filename}` in bytes | Analysis | y | 13 |
 | Find all files in the current directory with the `.txt` extension | Analysis | y | 14 |
-| Search for the word "Hello" in all `.txt` files in the current directory | Analysis | y | 15 |
+| Search for the word "Hello" in all `.txt` files in the current directory | Analysis | n | 15 |
 | Count the number of lines in `test_file.txt` | Analysis | y | 16 |
 | Display the most recently modified file in the current directory | Analysis | y | 17 |
 | Display the current working directory path | Navigation | y | 18 |
 | Create a tar archive named `backup.tar` containing all `.txt` files in the current directory | File Management | y | 19 |
-| Extract the `backup.tar` archive into a new directory named `extracted_backup` | File Management | y | 20 |
-| Find the file named `bee_movie.txt` on this computer and search for all the times the word 'bee' appears in it | Analysis | y | 21 |
+| Extract the `backup.tar` archive into a new directory named `extracted_backup` | File Management | n | 20 |
+| Find the file named `bee_movie.txt` on this computer and search for all the times the word 'bee' appears in it | Analysis | n | 21 |
 
 ty chatgpt <3
