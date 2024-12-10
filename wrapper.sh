@@ -12,6 +12,17 @@ usage() {
     echo "  -p, --pro       : Run the command with sudo privileges (requires sudo access)."
 }
 
+# Function to echo text with a typing effect
+typing_echo() {
+    local text="$1"
+    local delay=0.05  # Adjust this delay as needed
+    while IFS= read -r -n1 char; do
+        echo -n "$char"
+        sleep "$delay"
+    done <<< "$text"
+    echo  # Move to a new line after the text
+}
+
 # Default mode
 mode="normie"
 
@@ -74,10 +85,11 @@ echo "Command to run: $command_to_run"
 case $mode in
     "kiddie")
         echo "Kiddie mode: Not executing the command."
-        echo "$command_to_run"
+        typing_echo "$command_to_run"
         ;;
     "normie")
         echo "Normie mode: Running the command in a restricted shell."
+        typing_echo "$command_to_run"
         rbash -c "$command_to_run"
         ;;
     "pro")
@@ -86,6 +98,7 @@ case $mode in
             echo "Error: Sudo privileges are required but not available."
             exit 1
         fi
+        typing_echo "$command_to_run"
         eval "$command_to_run"
         ;;
     *)
