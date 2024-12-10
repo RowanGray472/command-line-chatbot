@@ -4,13 +4,13 @@ import re
 
 # Import your RAG and Baseline modules
 from rag_system import rag, ManpagesDB
-from baseline_system import baseline
+from baseline_model import command
 
 def cli_output(text, db, mode):
     if mode == "rag":
         output = rag(text, db)
     elif mode == "baseline":
-        output = baseline(text, db)
+        output = command(text)
     else:
         raise ValueError(f"Unknown mode: {mode}")
 

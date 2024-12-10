@@ -116,6 +116,10 @@ case $mode in
         typing_echo "$command_to_run"
         sudo bash -c "$command_to_run"
         ;;
+    "baseline")
+        echo "Baseline model: Not executing command."
+        typing_echo "$command_to_run"
+        ;;
     *)
         echo "Unknown mode: $mode"
         usage
