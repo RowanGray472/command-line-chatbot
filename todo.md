@@ -2,8 +2,7 @@
 
 --- tonight/before rowan wakes up tomorrow
 1. ainslee
-    1. DOUBLE CHECK SQL ESCAPING - i think we fixed this
-    1. double check tests shit, make sure it works with bash wrapper - letting rowan take first stab
+    1. fiddled with test.sh - done! i think. we need to actually record the results
     1. make sure github actions work with bash wrapper - letting rowan take first stab
 1. ainslee/rowan: rerun tests
 1. ainslee/rowan: iterate prompt engineering as needed
