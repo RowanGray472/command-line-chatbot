@@ -2,15 +2,9 @@
 
 --- tonight/before rowan wakes up tomorrow
 1. ainslee
-    1. GET RID OA AND REPLACE WITH TEXT BLOCK -> REGEX -> BASH
-    1. DOUBLE CHECK SQL ESCAPING
-    1. RIGHTS MANAGEMENT
-        1. kiddie and pro mode
-        1. make a list of commands it can use
-        1. llm layer to notice non-read commands
-        1. make a user
-    1. double check tests shit, make sure it works with bash wrapper
-    1. make sure github actions work with bash wrapper
+    1. DOUBLE CHECK SQL ESCAPING - i think we fixed this
+    1. double check tests shit, make sure it works with bash wrapper - letting rowan take first stab
+    1. make sure github actions work with bash wrapper - letting rowan take first stab
 1. ainslee/rowan: rerun tests
 1. ainslee/rowan: iterate prompt engineering as needed
 --- tomorrow
