@@ -24,6 +24,9 @@ jobs:
       - name: run doctests
         run: |
           python -m doctest -v ./command-line-chatbot/database_functions.py
+      - name: run CLI script
+        run: |
+          python ./command-line-chatbot/cli.py --text "go to the root directory"
 
   test_python_39:
     needs: test_python_38
@@ -43,4 +46,7 @@ jobs:
       - name: run doctests
         run: |
           python -m doctest -v ./command-line-chatbot/database_functions.py
+      - name: run CLI script
+        run: |
+          python ./command-line-chatbot/cli.py --text "go to the root directory"
 
