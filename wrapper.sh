@@ -25,5 +25,5 @@ fi
 # Debug: print the extracted command for verification
 echo "Command to run: $command_to_run"
 
-# Execute the extracted command
+# Execute the extracted command in the current shell
 eval "$command_to_run"
