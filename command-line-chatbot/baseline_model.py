@@ -1,9 +1,7 @@
-from database_functions import ManpagesDB
 from groq import Groq
 import os
 from dotenv import load_dotenv
 load_dotenv()
-import re
 
 """
 This file will contain a baseline model to generate these unix commands. 
@@ -40,10 +38,7 @@ def run_llm(system, user, model='llama-3.3-70b-versatile', seed=None):
     return chat_completion.choices[0].message.content
 
 
-def command(text, db):
-    keywords = extract_keywords(text)
-    manpages = db.find_manpages(query=keywords)
-
+def command(text):
     system = """
     ## ROLE
     You are a computer program tasked with translating user-entered natural language 
