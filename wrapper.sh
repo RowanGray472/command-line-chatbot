@@ -95,7 +95,6 @@ case $mode in
     "kiddie")
         echo "Kiddie mode: Not executing the command."
         echo "$command_to_run"
-        echo "$command_to_run"
         ;;
     "normie")
         echo "Normie mode: Running the command in a restricted shell."
