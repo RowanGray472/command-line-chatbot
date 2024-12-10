@@ -1,12 +1,15 @@
 #!/bin/bash
 
+# Export environment
+source env/bin/activate
+export $(cat .env)
+
 # Usage function
 usage() {
     echo "Usage: $0 [-k | --kiddie | -n | --normie | -p | --pro] \"command text\""
     echo "  -k, --kiddie    : Echo the command to run but do not execute it."
     echo "  -n, --normie    : Run the command in a restricted bash (rbash) subshell (default)."
     echo "  -p, --pro       : Run the command with sudo privileges (requires sudo access)."
-    exit 1
 }
 
 # Default mode
@@ -83,7 +86,7 @@ case $mode in
             echo "Error: Sudo privileges are required but not available."
             exit 1
         fi
-        sudo bash -c "$command_to_run"
+        eval "$command_to_run"
         ;;
     *)
         echo "Unknown mode: $mode"
